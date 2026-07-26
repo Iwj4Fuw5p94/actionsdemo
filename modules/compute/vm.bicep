@@ -2,6 +2,7 @@ param location string
 param subnetId string
 param vmName string
 param adminUsername string
+// param vmSize string = 'Standard_DS1_v2'
 
 @secure()
 param adminPassword string 
@@ -41,7 +42,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
 
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_D2s_v3'
+      // vmSize: 'Standard_D2s_v3'
+
+      vmSize: 'Standard_D2s_v5'
     }
 
     osProfile: {

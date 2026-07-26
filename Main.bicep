@@ -16,7 +16,7 @@ var tags = {
 
 
 module mgmodule './modules/resourcegroup.bicep' = {
-  name: 'mgmodule'
+    name: '${deployment().name}-MGMODULE'
   scope: subscription()
   params: {
     rgname: rgname
@@ -83,14 +83,18 @@ module vnet './modules/networking/vnet.bicep' = {
 
 // KEY VAULT
 
-// module keyVault './modules/security/keyvault.bicep' = {
-//   name: 'kvDeploys'
-//   params: {
-//     location: location
-//     adminPassword: adminPassword
-//     tags: tags
-//   }
-// }
+module keyVault './modules/security/keyvault.bicep' = {
+  name: 'uniqueString-hello'
+  scope:resourceGroup(rgname)
+  dependsOn:[
+    mgmodule
+  ]
+  params: {
+    location: location
+    adminPassword: adminPassword
+    tags: tags
+  }
+}
 
 
 // VM

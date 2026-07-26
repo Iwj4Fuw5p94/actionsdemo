@@ -6,7 +6,7 @@ param adminPassword string
 param tags object
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'enterprise-kv-0027'
+  name: 'enterprise-kv-0091'
   location: location
   tags: tags
 
@@ -29,7 +29,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
       // for security
   // softDeleteRetentionInDays: 90
 
-  publicNetworkAccess: 'Disabled'
+  publicNetworkAccess: 'Enabled'
 
   networkAcls: {
     bypass: 'AzureServices'

@@ -29,8 +29,11 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy Bicep
+        shell: bash
         run: |
+          ADMIN_PASSWORD="Aa1!$(openssl rand -base64 32 | tr -d '\n' | tr '/+' 'XY' | cut -c1-24)"
           az deployment sub create \
             --location eastus \
             --template-file Main.bicep \
             --parameters dev.bicepparam
+            --parameters adminPassword="$ADMIN_PASSWORD"
