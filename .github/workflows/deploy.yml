@@ -35,5 +35,5 @@ jobs:
           az deployment sub create \
             --location eastus \
             --template-file Main.bicep \
-            --parameters dev.bicepparam
+            --parameters dev.bicepparam \
             --parameters adminPassword="$ADMIN_PASSWORD"
