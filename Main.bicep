@@ -83,18 +83,18 @@ module vnet './modules/networking/vnet.bicep' = {
 
 // KEY VAULT
 
-module keyVault './modules/security/keyvault.bicep' = {
-  name: 'uniqueString-hello'
-  scope:resourceGroup(rgname)
-  dependsOn:[
-    mgmodule
-  ]
-  params: {
-    location: location
-    adminPassword: adminPassword
-    tags: tags
-  }
-}
+// module keyVault './modules/security/keyvault.bicep' = {
+//   name: 'uniqueString-hello'
+//   scope:resourceGroup(rgname)
+//   dependsOn:[
+//     mgmodule
+//   ]
+//   params: {
+//     location: location
+//     adminPassword: adminPassword
+//     tags: tags
+//   }
+// }
 
 
 // VM
@@ -169,40 +169,40 @@ module vm2 './modules/compute/vm.bicep' = {
 
 // param location string = resourceGroup().location
 
-module routeTable './modules/routing/routetable.bicep' = {
-  name: 'routeTableDeployment'
-  scope: resourceGroup(rgname)
-  dependsOn: [
-    mgmodule
-  ]
+// module routeTable './modules/routing/routetable.bicep' = {
+//   name: 'routeTableDeployment'
+//   scope: resourceGroup(rgname)
+//   dependsOn: [
+//     mgmodule
+//   ]
 
-  params: {
-    routeTableName: 'rt-dev-001'
-    location: location
+//   params: {
+//     routeTableName: 'rt-dev-001'
+//     location: location
 
-    disableBgpRoutePropagation: false
+//     disableBgpRoutePropagation: false
 
-    routes: [
-      {
-        name: 'default-route'
+//     routes: [
+//       {
+//         name: 'default-route'
 
-        properties: {
-          addressPrefix: '0.0.0.0/0'
-          nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: '10.0.0.4'
-        }
-      }
-      {
-        name: 'internal-route'
+//         properties: {
+//           addressPrefix: '0.0.0.0/0'
+//           nextHopType: 'VirtualAppliance'
+//           nextHopIpAddress: '10.0.0.4'
+//         }
+//       }
+//       {
+//         name: 'internal-route'
 
-        properties: {
-          addressPrefix: '10.1.0.0/16'
-          nextHopType: 'VnetLocal'
-        }
-      }
-    ]
-  }
-}
+//         properties: {
+//           addressPrefix: '10.1.0.0/16'
+//           nextHopType: 'VnetLocal'
+//         }
+//       }
+//     ]
+//   }
+// }
 
 
 
