@@ -1,0 +1,7 @@
+using './main.bicep'
+param location = 'eastus'
+param rgname = 'rg-hexaware-${environment}'
+param environment = 'test'
+param vmName = 'test-vm'
+param adminUsername = 'azureuser'
+param adminPassword = 'Admin@123'
