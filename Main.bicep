@@ -83,18 +83,18 @@ module vnet './modules/networking/vnet.bicep' = {
 
 // KEY VAULT
 
-// module keyVault './modules/security/keyvault.bicep' = {
-//   name: 'uniqueString-hello'
-//   scope:resourceGroup(rgname)
-//   dependsOn:[
-//     mgmodule
-//   ]
-//   params: {
-//     location: location
-//     adminPassword: adminPassword
-//     tags: tags
-//   }
-// }
+module keyVault './modules/security/keyvault.bicep' = {
+  name: 'uniqueString-hello'
+  scope:resourceGroup(rgname)
+  dependsOn:[
+    mgmodule
+  ]
+  params: {
+    location: location
+    // adminPassword: adminPassword
+    tags: tags
+  }
+}
 
 
 // VM
@@ -131,6 +131,7 @@ module vm2 './modules/compute/vm.bicep' = {
     subnetId: vnet.outputs.subnetId
     adminUsername: adminUsername
     adminPassword: adminPassword
+    KeyVaultName: keyVault.outputs.keyVaultName
     tags: tags
   }
 }
