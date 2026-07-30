@@ -90,19 +90,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
     }
   }
 }
-// for security
-// resource amaextention 'Microsoft.Compute/virtualMachines/extensions@2024-03-01' = {
-//   name: 'AzureMonitorWindowsAgent'
-//   location: location
-//   parent: vm
-//     properties: {
-//     publisher: 'Microsoft.Azure.Monitor'
-//     type: 'AzureMonitorWindowsAgent'
-//     typeHandlerVersion: '1.0'
-//   }
 
-// }
-// testing
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
   name:KeyVaultName
