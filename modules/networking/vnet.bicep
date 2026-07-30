@@ -12,7 +12,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
   properties: {
     addressSpace: {
       addressPrefixes: [
-        '10.0.0.0/16'
+        '10.1.0.0/16'
       ]
     }
 
@@ -21,7 +21,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
         name: subnetname
 
         properties: {
-          addressPrefix: '10.0.1.0/24'
+          addressPrefix: '10.1.1.0/24'
 
           networkSecurityGroup: {
             id: nsgId

@@ -6,7 +6,7 @@ param location string
 param tags object
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'enterprise-kv-0095'
+  name: 'enterprise-kv-0098'
   location: location
   tags: tags
 
@@ -22,7 +22,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
     accessPolicies: [
   {
     tenantId: subscription().tenantId
-    objectId: '9efcd157-e5c9-4dba-a9a3-001cc25a8d04'// paste actual Object ID here
+    objectId: 'ecf7362b-1f37-4001-a7ab-ad4817c4af66'// paste actual Object ID here
     permissions: {
       secrets: [ 'get', 'list', 'set', 'delete' ]
       keys:    [ 'get', 'list', 'create', 'delete' ]
