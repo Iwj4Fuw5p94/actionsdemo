@@ -131,7 +131,7 @@ module vm2 './modules/compute/vm.bicep' = {
     subnetId: vnet.outputs.subnetId
     adminUsername: adminUsername
     adminPassword: adminPassword
-    KeyVaultName: keyVault.outputs.keyVaultName
+    // KeyVaultName: keyVault.outputs.keyVaultName
     tags: tags
   }
 }

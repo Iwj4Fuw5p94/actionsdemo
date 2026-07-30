@@ -6,7 +6,7 @@ param location string
 param tags object
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'enterprise-kv-0098'
+  name: 'enterprise-kv-0099'
   location: location
   tags: tags
 

@@ -3,7 +3,7 @@ param subnetId string
 param vmName string
 param adminUsername string
 // param vmSize string = 'Standard_DS1_v2'
-param KeyVaultName string
+// param KeyVaultName string
 
 @secure()
 param adminPassword string 
@@ -32,17 +32,17 @@ resource nic 'Microsoft.Network/networkInterfaces@2023-04-01' = {
   }
 }
 
-resource existingKeyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
-  name:KeyVaultName
-}
+// resource existingKeyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
+//   name:KeyVaultName
+// }
 
-resource breakGlassSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
-  parent: existingKeyVault
-  name:'${vmName}-breakglass-admin'
-  properties:{
-    value: adminPassword
-  }
-}
+// resource breakGlassSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+//   parent: existingKeyVault
+//   name:'${vmName}-breakglass-admin'
+//   properties:{
+//     value: adminPassword
+//   }
+// }
 
 resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: vmName
@@ -92,21 +92,21 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
 }
 
 
-resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
-  name:KeyVaultName
-}
+// resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
+//   name:KeyVaultName
+// }
 
-resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
-  parent: keyVault
-  name: 'vmAdminPassword'
+// resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+//   parent: keyVault
+//   name: 'vmAdminPassword'
 
-  properties: {
-    value: adminPassword
-    contentType: 'Password'
+//   properties: {
+//     value: adminPassword
+//     contentType: 'Password'
     
-  }
+//   }
   
-}
+// }
 
 
 
