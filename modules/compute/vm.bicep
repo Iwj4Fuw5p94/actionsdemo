@@ -108,5 +108,7 @@ resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   
 }
 
+
+
 output vmId string = vm.id
 output principalId string = vm.identity.principalId
