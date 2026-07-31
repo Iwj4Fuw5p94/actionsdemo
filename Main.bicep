@@ -150,6 +150,22 @@ module vm2 './modules/compute/vm.bicep' = {
     tags: tags
   }
 }
+module vm3 './modules/compute/vm.bicep' = {
+  name: 'vmDeploy'
+  scope: resourceGroup(rgname)
+  dependsOn: [
+    mgmodule
+  ]
+  params: {
+    location: location
+    vmName: 'dev-vm2'
+    subnetId: vnet.outputs.subnetId
+    adminUsername: adminUsername
+    adminPassword: adminPassword
+    KeyVaultName: keyVault.outputs.keyVaultName
+    tags: tags
+  }
+}
 
 // testing
 // param virtualMachines array
