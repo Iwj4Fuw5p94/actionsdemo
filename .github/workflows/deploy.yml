@@ -1,9 +1,6 @@
-name: Deploy Azure Resources
+name: Deploy Landing Zone
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -14,12 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      KEYVAULT_NAME: kv011
-      SECRET_NAME: vmAdminPassword
-
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -29,50 +21,42 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      - name: Verify Azure Login
-        run: |
-          az account show
 
-      - name: Verify Key Vault
-        run: |
-          az keyvault show --name "$KEYVAULT_NAME"
-
-      - name: Check Key Vault and Get Password
+      - name: Get Existing Password or Generate New
         id: password
         shell: bash
         run: |
 
-          PASSWORD=$(az keyvault secret show \
-            --vault-name "$KEYVAULT_NAME" \
+          KV_NAME="kv011"
+          SECRET_NAME="vm-adminPassword"
+
+          EXISTING_PASS=$(az keyvault secret show \
+            --vault-name "$KV_NAME" \
             --name "$SECRET_NAME" \
             --query value \
-            -o tsv)
+            -o tsv 2>/dev/null || true)
 
-          if [ -z "$PASSWORD" ]; then
-
-            echo "Secret not found."
+          if [ -n "$EXISTING_PASS" ]; then
+            echo "Existing password found."
+            ADMIN_PASS="$EXISTING_PASS"
+          else
             echo "Generating new password..."
 
-            PASSWORD="Aa1!$(openssl rand -base64 32 | tr -d '\n' | tr '/+' 'XY' | cut -c1-24)"
+            ADMIN_PASS=$(openssl rand -base64 24 | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c 20)
 
             az keyvault secret set \
-              --vault-name $KEYVAULT_NAME \
-              --name $SECRET_NAME \
-              --value "$PASSWORD"
-
-          else
-
-            echo "Existing password found."
-
+              --vault-name "$KV_NAME" \
+              --name "$SECRET_NAME" \
+              --value "$ADMIN_PASS"
           fi
 
-          echo "ADMIN_PASSWORD=$PASSWORD" >> $GITHUB_ENV
+          echo "::add-mask::$ADMIN_PASS"
+          echo "ADMIN_PASS=$ADMIN_PASS" >> $GITHUB_ENV
 
-      - name: Deploy Bicep
+      - name: Deploy Infrastructure
         run: |
-
           az deployment sub create \
             --location eastus \
-            --template-file Main.bicep \
-            --parameters dev.bicepparam \
-            --parameters adminPassword="$ADMIN_PASSWORD"
+            --template-file ./bicep/main.bicep \
+            --parameters ./bicep/environments/dev.bicepparam \
+            --parameters adminPassword="$ADMIN_PASS"
