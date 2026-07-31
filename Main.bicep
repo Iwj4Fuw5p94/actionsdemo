@@ -91,7 +91,7 @@ module keyVault './modules/security/keyvault.bicep' = {
     mgmodule
   ]
   params: {
-    keyVaultName:'kv01'
+    keyVaultName:'kv011'
     location: location
     // adminPassword: adminPassword
     tags: tags
