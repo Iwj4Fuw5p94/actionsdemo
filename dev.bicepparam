@@ -7,8 +7,4 @@ param adminUsername = 'azureuser'
 param adminPassword = ''
 param rgname = 'rg-hexob-${environment}'
 
-param virtualMachines =  [
-  {
-    
-  }
-]
+
