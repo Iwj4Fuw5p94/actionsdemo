@@ -97,19 +97,19 @@ module keyVault './modules/security/keyvault.bicep' = {
     tags: tags
   }
 }
-module keyVault1 './modules/security/keyvault.bicep' = {
-  name: 'uniqueString-hello'
-  scope:resourceGroup(rgname)
-  dependsOn:[
-    mgmodule
-  ]
-  params: {
-    keyVaultName:'kv02'
-    location: location
-    // adminPassword: adminPassword
-    tags: tags
-  }
-}
+// module keyVault1 './modules/security/keyvault.bicep' = {
+//   name: 'uniqueString-hello'
+//   scope:resourceGroup(rgname)
+//   dependsOn:[
+//     mgmodule
+//   ]
+//   params: {
+//     keyVaultName:'kv02'
+//     location: location
+//     // adminPassword: adminPassword
+//     tags: tags
+//   }
+// }
 
 
 // VM
