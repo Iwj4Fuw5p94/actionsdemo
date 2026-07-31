@@ -8,6 +8,7 @@ param adminUsername string
 param adminPassword string 
 param rgname string
 
+
 var tags = {
   Environment: environment
   Owner: 'CloudTeam'
@@ -90,6 +91,20 @@ module keyVault './modules/security/keyvault.bicep' = {
     mgmodule
   ]
   params: {
+    keyVaultName:'kv01'
+    location: location
+    // adminPassword: adminPassword
+    tags: tags
+  }
+}
+module keyVault1 './modules/security/keyvault.bicep' = {
+  name: 'uniqueString-hello'
+  scope:resourceGroup(rgname)
+  dependsOn:[
+    mgmodule
+  ]
+  params: {
+    keyVaultName:'kv02'
     location: location
     // adminPassword: adminPassword
     tags: tags
@@ -119,22 +134,42 @@ module keyVault './modules/security/keyvault.bicep' = {
 
 // VM Module
 //
-module vm2 './modules/compute/vm.bicep' = {
-  name: 'vmDeploy'
-  scope: resourceGroup(rgname)
-  dependsOn: [
-    mgmodule
-  ]
+// module vm2 './modules/compute/vm.bicep' = {
+//   name: 'vmDeploy'
+//   scope: resourceGroup(rgname)
+//   dependsOn: [
+//     mgmodule
+//   ]
+//   params: {
+//     location: location
+//     vmName: vmName
+//     subnetId: vnet.outputs.subnetId
+//     adminUsername: adminUsername
+//     adminPassword: adminPassword
+//     // KeyVaultName: keyVault.outputs.keyVaultName
+//     tags: tags
+//   }
+// }
+
+// testing
+param virtualMachines array
+
+module vm './modules/compute/vm.bicep' = [for vm in virtualMachines: {
+  name: 'vm-${vm.name}'
+  scope:resourceGroup(rgname)
+
   params: {
-    location: location
-    vmName: vmName
-    subnetId: vnet.outputs.subnetId
-    adminUsername: adminUsername
-    adminPassword: adminPassword
-    // KeyVaultName: keyVault.outputs.keyVaultName
-    tags: tags
+    location:location
+    vmName: vm.name
+    adminUsername: vm.adminUsername
+    subnetId: vm.subnetId
+    KeyVaultName: vm.keyVaultName
+
+    // Password comes from the virtualMachines array
+    adminPassword: vm.adminPassword
+    tags:vm.tags
   }
-}
+}]
 
 // module vm2 './modules/compute/vm.bicep' = {
 //   name: 'vmDeploy02'

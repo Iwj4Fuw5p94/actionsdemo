@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      KEYVAULT_NAME: enterprise-kv-0094
+      KEYVAULT_NAME: kv02
       SECRET_NAME: vmAdminPassword
 
     steps:

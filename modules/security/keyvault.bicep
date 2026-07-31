@@ -2,11 +2,12 @@ param location string
 
 // @secure()
 // param adminPassword string
+param keyVaultName string
 
 param tags object
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'enterprise-kv-0099'
+  name: keyVaultName
   location: location
   tags: tags
 

@@ -3,7 +3,7 @@ param subnetId string
 param vmName string
 param adminUsername string
 // param vmSize string = 'Standard_DS1_v2'
-// param KeyVaultName string
+param KeyVaultName string
 
 @secure()
 param adminPassword string 
