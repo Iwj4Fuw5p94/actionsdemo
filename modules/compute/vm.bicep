@@ -92,21 +92,21 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
 }
 
 
-// resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
-//   name:KeyVaultName
-// }
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing ={
+  name:KeyVaultName
+}
 
-// resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
-//   parent: keyVault
-//   name: 'vmAdminPassword'
+resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyVault
+  name: 'vmAdminPassword'
 
-//   properties: {
-//     value: adminPassword
-//     contentType: 'Password'
+  properties: {
+    value: adminPassword
+    contentType: 'Password'
     
-//   }
+  }
   
-// }
+}
 
 
 

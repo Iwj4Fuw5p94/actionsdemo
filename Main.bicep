@@ -134,42 +134,42 @@ module keyVault './modules/security/keyvault.bicep' = {
 
 // VM Module
 //
-// module vm2 './modules/compute/vm.bicep' = {
-//   name: 'vmDeploy'
-//   scope: resourceGroup(rgname)
-//   dependsOn: [
-//     mgmodule
-//   ]
-//   params: {
-//     location: location
-//     vmName: vmName
-//     subnetId: vnet.outputs.subnetId
-//     adminUsername: adminUsername
-//     adminPassword: adminPassword
-//     // KeyVaultName: keyVault.outputs.keyVaultName
-//     tags: tags
-//   }
-// }
+module vm2 './modules/compute/vm.bicep' = {
+  name: 'vmDeploy'
+  scope: resourceGroup(rgname)
+  dependsOn: [
+    mgmodule
+  ]
+  params: {
+    location: location
+    vmName: vmName
+    subnetId: vnet.outputs.subnetId
+    adminUsername: adminUsername
+    adminPassword: adminPassword
+    KeyVaultName: keyVault.outputs.keyVaultName
+    tags: tags
+  }
+}
 
 // testing
-param virtualMachines array
+// param virtualMachines array
 
-module vm './modules/compute/vm.bicep' = [for vm in virtualMachines: {
-  name: 'vm-${vm.name}'
-  scope:resourceGroup(rgname)
+// module vm './modules/compute/vm.bicep' = [for vm in virtualMachines: {
+//   name: 'vm-${vm.name}'
+//   scope:resourceGroup(rgname)
 
-  params: {
-    location:location
-    vmName: vm.name
-    adminUsername: vm.adminUsername
-    subnetId: vm.subnetId
-    KeyVaultName: vm.keyVaultName
+//   params: {
+//     location:location
+//     vmName: vm.name
+//     adminUsername: vm.adminUsername
+//     subnetId: vm.subnetId
+//     KeyVaultName: vm.keyVaultName
 
-    // Password comes from the virtualMachines array
-    adminPassword: vm.adminPassword
-    tags:vm.tags
-  }
-}]
+//     // Password comes from the virtualMachines array
+//     adminPassword: vm.adminPassword
+//     tags:vm.tags
+//   }
+// }]
 
 // module vm2 './modules/compute/vm.bicep' = {
 //   name: 'vmDeploy02'
